@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Inject, Patch, Res, UseGuards } from "@nestjs/common";
 import { UsersService } from "../users.service";
 import { UpdatePasswordDTO } from "./dto";
-import { AUTH_GUARDS } from "../../auth";
+import { AUTH_GUARDS } from "../../auth/guards";
 import { Response } from "express";
 import { TokenPayload } from "../../auth/dto";
 

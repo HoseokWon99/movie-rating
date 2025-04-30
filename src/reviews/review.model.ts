@@ -14,26 +14,24 @@ import { Comment } from "../comments/comment.model";
 export class Review {
 
     @PrimaryGeneratedColumn()
-    readonly id: number;
+    id: number;
 
     @Column({
         name: "user_id",
-        type: "integer",
-        nullable: false
+        type: "integer"
     })
-    readonly userId: number;
+    userId: number;
 
     @Column({
         name: "movie_id",
-        type: "integer",
-        nullable: false
+        type: "integer"
     })
-    readonly movieId: number;
+    movieId: number;
 
-    @Column({ type: "decimal", nullable: false })
+    @Column({ type: "decimal" })
     rating: number;
 
-    @Column({ type:"text", nullable: false })
+    @Column({ type:"text" })
     content: string;
 
     @Column({type: "integer", default: 0})

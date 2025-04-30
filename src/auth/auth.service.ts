@@ -30,11 +30,17 @@ export class AuthService {
     return {
       accessToken: this._jwtService.sign(
         userInfo,
-        { expiresIn: Number(process.env.JWT_ACCESS_TOKEN_DURATION) }
+        {
+          secret: process.env.JWT_SECRET,
+          expiresIn: Number(process.env.JWT_ACCESS_TOKEN_DURATION)
+        }
       ),
       refreshToken: this._jwtService.sign(
         userInfo,
-        { expiresIn: Number(process.env.JWT_REFRESH_TOKEN_DURATION) }
+        {
+          secret: process.env.JWT_SECRET,
+          expiresIn: Number(process.env.JWT_REFRESH_TOKEN_DURATION)
+        }
       )
     };
   }

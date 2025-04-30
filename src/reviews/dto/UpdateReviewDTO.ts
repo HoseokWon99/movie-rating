@@ -1,15 +1,7 @@
-import { IsNumber, IsString, Max, Min } from "class-validator";
+import { ReviewDTO } from "./ReviewDTO";
+import { IntersectionType, PartialType, PickType } from "@nestjs/mapped-types";
 
-export class UpdateReviewDTO {
-    @Max(5)
-    @Min(0)
-    @IsNumber()
-    rating: number;
-
-    @IsString()
-    content: string;
-
-    @Min(0)
-    @IsNumber()
-    likes: number;
-}
+export class UpdateReviewDTO extends IntersectionType(
+  PickType(ReviewDTO, ["id"]),
+  PartialType(PickType(ReviewDTO,["content", "rating", "likes"]))
+) {}

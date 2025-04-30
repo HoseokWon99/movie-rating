@@ -7,7 +7,7 @@ import Redis from "ioredis";
 import { plainToInstance } from "class-transformer";
 import { validate, validateOrReject } from "class-validator";
 
-const VERIFICATION_EX = 300000;
+const VERIFICATION_EX = 300;
 
 @Injectable()
 export class UsersVerificationService {
@@ -110,7 +110,7 @@ export class UsersVerificationService {
               <div style="max-width: 600px; background-color: #ffffff; margin: auto; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                 <h2 style="color: black">아래 링크를 통해 인증을 완료해주세요.</h2>
                 <a 
-                    href="http://localhost:3000/api/users/verification/${key}" 
+                    href="http://localhost:3000/users/verify-email/${key}" 
                     style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #007bff;color: white; border-radius: 5px; font-weight: bold;"
                 >인증하기</a>
               </div>

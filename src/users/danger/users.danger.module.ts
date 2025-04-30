@@ -4,8 +4,9 @@ import { User } from "../user.model";
 import { AuthModule } from "../../auth";
 import { UsersService } from "../users.service";
 import { JwtModule, JwtService } from "@nestjs/jwt";
-import { AUTH_GUARDS } from "../../auth";
+import { AUTH_GUARDS } from "../../auth/guards";
 import { UsersDangerController } from "./users.danger.controller";
+import Redis from "ioredis";
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { UsersDangerController } from "./users.danger.controller";
   providers: [
     UsersService,
     JwtService,
-    ...AUTH_GUARDS
+    ...AUTH_GUARDS,
+    Redis
   ]
 })
 export class UsersDangerModule {}

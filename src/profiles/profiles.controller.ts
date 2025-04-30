@@ -3,7 +3,7 @@ import { ProfilesService } from "./profiles.service";
 import { Response } from "express";
 import { OnEvent } from "@nestjs/event-emitter";
 import { User } from "../users";
-import { AUTH_GUARDS } from "../auth";
+import { AUTH_GUARDS } from "../auth/guards";
 import { UpdateProfileDTO, UpsertProfileDTO } from "./dto";
 
 @Controller('api/profiles')

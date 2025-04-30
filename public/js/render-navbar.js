@@ -2,11 +2,15 @@ const getAccessToken = () => {
   return localStorage.getItem("TOKEN");
 }
 
+const setAccessToken = (accessToken) => {
+  localStorage.setItem("TOKEN", accessToken);
+}
+
 async function handleSignOut() {
   const accessToken = getAccessToken();
 
   if (accessToken) {
-    await fetch("api/users/sign-out", {
+    await fetch("api/auth/sign-out", {
       method: "GET",
       headers: { "Authorization": `Bearer ${accessToken}` }
     });

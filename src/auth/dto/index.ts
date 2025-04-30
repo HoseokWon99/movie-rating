@@ -1,3 +1,3 @@
 export * from "./SignInDTO";
-export * from "./TokenPayload";
 export * from "./TokenPair";
+export * from "./TokenPayload";

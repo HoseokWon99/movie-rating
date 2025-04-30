@@ -1,5 +1,5 @@
-import { CreateReviewDTO } from "./CreateReviewDTO";
+import { ReviewDTO } from "./ReviewDTO";
+import { PartialType } from "@nestjs/mapped-types";
 
-export type GetReviewsDTO
-    = Partial<Pick<CreateReviewDTO, "userId" | "movieId">>;
+export class GetReviewsDTO extends PartialType(ReviewDTO) {}
 

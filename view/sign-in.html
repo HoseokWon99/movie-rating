@@ -31,7 +31,7 @@
                 >
             </div>
             <div class="d-grid mb-3">
-                <button type="button" class="btn btn-dark" id="submit-btn">로그인</button>
+                <button type="submit" class="btn btn-dark" id="submit-btn">로그인</button>
             </div>
             <div class="d-flex justify-content-center gap-3 mb-4">
                 <button
@@ -46,25 +46,40 @@
                 <a href="/users/sign-up">회원가입</a> / <a href="#">비밀번호 재설정</a>
             </div>
         </form>
-        <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content text-center">
-                    <div class="modal-body" id="modal-message">
-                        입력하신 이메일 주소로 인증 메일이 발송되었습니다.
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <script>
-    window.onload = async function () {
+    window.onload = function () {
 
-        document.getElementById("submit-btn")
-                .addEventListener("click", async (e) => {
-                    e.preventDefault();
-                })
+        document.querySelector("form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            await handleSignIn();
+        });
 
+        async function handleSignIn() {
+            const email = document.getElementById("email-input").value;
+            const password = document.getElementById("password-input").value;
+
+            try {
+                const res = await fetch("http://localhost:3000/api/auth/sign-in", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json; charset=UTF-8"},
+                    body: JSON.stringify({ email, password })
+                });
+
+                console.log(res.status);
+
+                if (res.ok) {
+                    const { accessToken } = await res.json();
+                    localStorage.setItem("TOKEN", accessToken);
+                    window.location.href = "/main";
+                } else {
+                    console.error("Sign-in failed");
+                }
+            } catch (err) {
+                console.error("Error during sign-in:", err);
+            }
+        }
 
     }
 </script>

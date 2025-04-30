@@ -19,7 +19,7 @@ export class UsersViewController {
       res.render("verification-email-sent.html");
     }
 
-    @Get("/verify-email/:token")
+    @Get("/verify-email/:key")
     verifyEmail(@Res() res: Response){
       res.render("verify-email.html");
     }

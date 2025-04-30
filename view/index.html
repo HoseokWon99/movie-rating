@@ -57,7 +57,8 @@
 </script>
 <script>
     window.onload = async function() {
-        document.body.insertAdjacentHTML("afterbegin", await renderNavbar());
+        const token = localStorage.getItem('TOKEN');
+        document.body.insertAdjacentHTML("afterbegin", await renderNavbar(token));
 
         document.querySelectorAll(".scrolling-wrapper")
                 .forEach(elem => {

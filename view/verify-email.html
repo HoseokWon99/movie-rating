@@ -23,10 +23,10 @@
 <script>
    window.onload = async function() {
        const resultDiv = document.getElementById("verification-result");
-       const token = window.location.pathname.split('/').at(-1);
-       console.log(token);
+       const key = window.location.pathname.split('/').at(-1);
+       console.log(key);
 
-       await fetch(`/api/users/verify-email/${token}`)
+       await fetch(`/api/users/verification/verify-email/${key}`)
                .then(res => {
                    resultDiv.innerHTML = res.ok ? renderSuccess() : renderFailure();
                })

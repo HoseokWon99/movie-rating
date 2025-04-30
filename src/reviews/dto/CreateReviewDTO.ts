@@ -1,17 +1,9 @@
-import { IsNumber, IsString, Max, Min } from "class-validator";
+import { ReviewDTO } from "./ReviewDTO";
+import { OmitType, PickType } from "@nestjs/mapped-types";
 
-export class CreateReviewDTO {
-    @IsNumber()
-    userId: number;
+export class CreateReviewDTO extends PickType(
+  ReviewDTO, ["userId", "movieId", "rating", "content"]
+) {}
 
-    @IsNumber()
-    movieId: number;
-
-    @Max(5)
-    @Min(0)
-    @IsNumber()
-    rating: number;
-
-    @IsString()
-    content: string;
-}
+export class CreateReviewRequestDTO
+  extends OmitType(CreateReviewDTO, ["userId"]) {}

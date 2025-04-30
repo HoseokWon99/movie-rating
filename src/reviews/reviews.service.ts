@@ -1,8 +1,8 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Review } from "./review.model";
 import { Repository } from "typeorm";
-import { CreateReviewDTO } from "./dto";
-import { UpdateReviewDTO } from "./dto/UpdateReviewDTO";
+import { CreateReviewDTO, GetReviewsDTO } from "./dto";
+import { UpdateReviewDTO } from "./dto";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { InjectRepository } from "@nestjs/typeorm";
 
@@ -16,30 +16,18 @@ export class ReviewsService {
         private readonly _eventEmitter: EventEmitter2
     ) {}
 
-    async getReview(id: number) {
-
-        const review = await this._reviewsRepos
-            .findOneBy( { id: id } );
-
-        if (!review)
-            throw new NotFoundException("Review Not Found");
-
-        return review;
-    }
-
-    async getReviewsBy(options: Partial<Review>) {
-        return await this._reviewsRepos.findBy(options);
+    async getReviewsBy(dto: GetReviewsDTO) {
+        return await this._reviewsRepos.findBy(dto);
     }
 
     async createReview(dto: CreateReviewDTO) {
         const review: Review = await this._reviewsRepos.save(dto);
-        this.emitReputationEvent(review.movieId);
+        this._eventEmitter.emit("review.created", review);
         return review;
     }
 
-    async updateReview(id: number, dto: UpdateReviewDTO) {
-        await this._reviewsRepos.update(id, dto);
-        const review = await this.getReview(id);
+    async updateReview(dto: UpdateReviewDTO) {
+       const review: Review = await this._reviewsRepos.save(dto);
 
         if (Object.hasOwn(dto, "rating"))
             this.emitReputationEvent(review.movieId);
@@ -47,11 +35,15 @@ export class ReviewsService {
         return review;
     }
 
-    async deleteReview(id: number) {
-        const review = await this.getReview(id);
-        await this._reviewsRepos.remove(review);
-        this.emitReputationEvent(review.movieId);
+    async deleteReviewsBy(dto: GetReviewsDTO) {
+
+      const reviews = await this.getReviewsBy(dto)
+        .then(reviews => this._reviewsRepos.remove(reviews));
+
+      this._eventEmitter.emit("reviews.deleted", reviews);
     }
+
+
 
     private emitReputationEvent(movieId: number) {
         this._eventEmitter.emit(

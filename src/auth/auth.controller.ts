@@ -26,7 +26,7 @@ export class AuthController {
             { maxAge: Number(process.env.JWT_REFRESH_TOKEN_DURATION) }
         );
 
-        return { accessToken: accessToken };
+        res.send({ accessToken: accessToken });
     }
 
     @Get("/sign-out")
